@@ -9,7 +9,7 @@ I'm a Technical Product Owner at Konrad Group, where I bridge business strategy,
 - [**B2B2C Platform Governance: Standardized Core Epic Template for API Delivery**](./case-studies/experian-api-requirements.md)
   *Standardized Core Epic Template for enterprise B2B2C API platforms. Features structured User Stories, Definition of Done, REST API/CI-CD guidelines, and Tech Lead solution design sections. Built to eliminate engineering ambiguity, streamline dev handoff, and enforce quality standards. Technical Product Owner | Jira | Agile.*
 
-### 📊 Data-Driven Product Strategy (SQL & Analytics)
+### 📊 Data-Driven Product Strategy (Excel | SQL | PowerBI)
 - [**Customer Success Operations: KPI Definition & SQL Data Modeling**](./case-studies/cs-operations-dashboard.md)
   *Defined and modeled the Core KPIs (CLV, Churn Risk) that CS leadership needed to move from reactive to proactive account management. Architected a Star Schema in PostgreSQL and built the Power BI layer on top, turning fragmented usage data into a single source of truth for engagement decisions.*
 - [**HR Attrition Analytics: Root Cause Analysis & Retention Strategy**](./case-studies/hr-attrition-analytics.md)
