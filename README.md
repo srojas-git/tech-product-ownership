@@ -6,7 +6,7 @@ I'm a Technical Product Owner at Konrad Group, where I bridge business strategy,
 ## Case Studies
 
 ### 🔌 API & Platform Product Management
-- [**B2B2C Platform Governance: Standardized Core Epic Template for API Delivery**](./case-studies/core-epic-template.md)
+- [**B2B2C Platform Governance: Standardized Core Epic Template for API Delivery**](./case-studies/B2B2C Platform Governance: Standardized Core Epic Template for API Delivery.md)
   *Standardized Core Epic Template for enterprise B2B2C API platforms. Features structured User Stories, Definition of Done, REST API/CI-CD guidelines, and Tech Lead solution design sections. Built to eliminate engineering ambiguity, streamline dev handoff, and enforce quality standards. Technical Product Owner | Jira | Agile.*
 
 ### 📊 Data-Driven Product Strategy (Excel | SQL | PowerBI)
