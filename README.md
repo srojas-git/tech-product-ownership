@@ -22,4 +22,4 @@ I'm a Technical Product Owner at Konrad Group, where I bridge business strategy,
 - [**Go-to-Market Strategy & Release Notes Communication**](./case-studies/release-planning-gtm.md) *(Placeholder)*
 
 ## Contact
-[LinkedIn](www.linkedin.com/in/samuelrojasg) | samurg44@gmail.com
+www.linkedin.com/in/samuelrojasg | samurg44@gmail.com
