@@ -18,12 +18,11 @@ I identified this as a systemic, org-level gap rather than a team-specific issue
 
 > **Note:** The table below is filled with dummy/placeholder data for illustration purposes only.
 
-```markdown
+
 ### Metadata
 
-| | | | |
-| :--- | :--- | :--- | :--- |
 | **Type:** | Epic | **Priority:** | Medium |
+| :--- | :--- | :--- | :--- |
 | **Status:** | Backlog | **Assignee:** | Unassigned |
 | **Reporter:** | S. Rojas | **Resolution:** | Unresolved |
 | **Components:** | Partner Console | **Labels:** | dx, api |
@@ -48,9 +47,8 @@ I identified this as a systemic, org-level gap rather than a team-specific issue
 
 ### User Story
 
-| | |
+| AS A | Financial partner integrating via the Partner API |
 | :--- | :--- |
-| **AS A** | Financial partner integrating via the Partner API |
 | **I WANT** | Failed webhook deliveries to automatically retry with exponential backoff |
 | **SO THAT** | I don't lose critical transaction events due to transient network failures |
 
@@ -94,7 +92,7 @@ Tech Lead: [Name]
 
 ### Comments
 Template only — no work required until fields above are completed.
-```
+
 
 ## Impact
 
