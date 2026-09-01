@@ -1,21 +1,19 @@
-# Tech Product Ownership Portfolio — Samuel Rojas
+# Tech Product Owner Portfolio — Samuel Rojas
 
 ## About Me
-Hybrid Technical Strategy & Product Consultant (Ex-McKinsey) acting as the connective tissue between Business, UX, and Software Engineering. I specialize in requirements engineering (BDD), Developer Experience (DX) for API platforms, and translating ambiguous business goals into data-driven, shippable digital products. 
+I'm a Technical Product Owner at Konrad Group, where I bridge business strategy, engineering, and data to turn ambiguous requirements into shippable product outcomes. My work centers on translating stakeholder intent into clear specifications, prioritized backlogs, and technical requirements that development teams can act on with confidence. What sets my approach apart is a strong data foundation — SQL, Power BI, and data modeling — which I use to validate product decisions with evidence rather than assumption, a skill I'm formalizing through a degree in Data Science Engineering. This repository showcases that intersection: product ownership artifacts, requirements frameworks, and data-driven case studies that reflect how I approach building products end to end.
 
 ## Case Studies
 
 ### 🔌 API & Platform Product Management
 - [**Experian Connected Platform: API Requirements & DX**](./case-studies/experian-api-requirements.md)
-  *Product Ownership for a B2B2C API platform. Defined functional requirements, Salesforce configurations, and Developer Experience (DX) standards to accelerate integration times for financial partners like Amex.*
-- [**CRM Implementation: E2E Product Delivery for Education Sector**](./case-studies/crm-colegio-cr.md)
-  *Acted as Lead PO to digitize a local high school. Conducted stakeholder discovery, structured requirements, built a centralized database using AI tools, and drove user training and adoption.*
+  *Designed a reusable requirements framework for B2B2C API platform integrations, standardizing functional specs, backend configuration, and Developer Experience (DX) criteria. Reduced ambiguity in the handoff to engineering and shortened integration timelines for enterprise financial partners.*
 
 ### 📊 Data-Driven Product Strategy (SQL & Analytics)
 - [**Customer Success Operations: KPI Definition & SQL Data Modeling**](./case-studies/cs-operations-dashboard.md)
-  *Architected a Star Schema database in PostgreSQL and a Power BI dashboard to define and monitor Core KPIs (CLV, Churn Risk). Enabled CS leadership to make proactive, data-backed engagement decisions.*
+  *Defined and modeled the Core KPIs (CLV, Churn Risk) that CS leadership needed to move from reactive to proactive account management. Architected a Star Schema in PostgreSQL and built the Power BI layer on top, turning fragmented usage data into a single source of truth for engagement decisions.*
 - [**HR Attrition Analytics: Root Cause Analysis & Retention Strategy**](./case-studies/hr-attrition-analytics.md)
-  *Led data discovery and feature engineering (PowerQuery/VBA) on a complex HR dataset. Translated raw metrics into actionable product recommendations to mitigate "Year 0" manager friction and burnout.*
+  *Owned the discovery phase on a complex HR dataset, using feature engineering (Power Query/VBA) to surface the drivers behind "Year 0" attrition. Reframed raw turnover metrics into a set of product recommendations aimed at reducing new-manager friction and early burnout.*
 
 ### 🚀 Agile Delivery & Product Discovery (Coming Soon)
 - [**Product Requirement Document (PRD) & BDD Acceptance Criteria**](./case-studies/prd-bdd-template.md) *(Placeholder)*
@@ -24,4 +22,4 @@ Hybrid Technical Strategy & Product Consultant (Ex-McKinsey) acting as the conne
 - [**Go-to-Market Strategy & Release Notes Communication**](./case-studies/release-planning-gtm.md) *(Placeholder)*
 
 ## Contact
-[LinkedIn](https://www.linkedin.com/in/samuelrojasg) | samurg44@gmail.com
+[LinkedIn](www.linkedin.com/in/samuelrojasg) | samurg44@gmail.com
