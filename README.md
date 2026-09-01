@@ -1,13 +1,13 @@
 # Tech Product Owner Portfolio — Samuel Rojas
 
 ## About Me
-I'm a Technical Product Owner at Konrad Group, where I bridge business strategy, engineering, and data to turn ambiguous requirements into shippable product outcomes. My work centers on translating stakeholder intent into clear specifications, prioritized backlogs, and technical requirements that development teams can act on with confidence. What sets my approach apart is a strong data foundation — SQL, Power BI, and data modeling — which I use to validate product decisions with evidence rather than assumption, a skill I'm formalizing through a degree in Data Science Engineering. This repository showcases that intersection: product ownership artifacts, requirements frameworks, and data-driven case studies that reflect how I approach building products end to end.
+I'm a Technical Product Owner at Konrad Group, where I bridge business strategy, engineering, and data to turn ambiguous requirements into shippable product outcomes. I bring a Scrum-expert foundation together with hands-on technical fluency — REST APIs and JSON, relational and non-relational databases, cloud environments, and the DEV/UAT/PROD release lifecycle — so I can speak both languages: business intent and engineering constraint. I care deeply about Developer Experience (DX), owning the end-to-end path from requirement to release, and I stay close to how GenAI and backend architecture are reshaping what's buildable. This repository showcases that intersection: product ownership artifacts, requirements frameworks, and case studies that reflect how I take a product from ambiguity to delivery.
 
 ## Case Studies
 
 ### 🔌 API & Platform Product Management
-- [**Experian Connected Platform: API Requirements & DX**](./case-studies/experian-api-requirements.md)
-  *Designed a reusable requirements framework for B2B2C API platform integrations, standardizing functional specs, backend configuration, and Developer Experience (DX) criteria. Reduced ambiguity in the handoff to engineering and shortened integration timelines for enterprise financial partners.*
+- [**B2B2C Platform Governance: Standardized Core Epic Template for API Delivery**](./case-studies/experian-api-requirements.md)
+  *Standardized Core Epic Template for enterprise B2B2C API platforms. Features structured User Stories, Definition of Done, REST API/CI-CD guidelines, and Tech Lead solution design sections. Built to eliminate engineering ambiguity, streamline dev handoff, and enforce quality standards. Technical Product Owner | Jira | Agile.*
 
 ### 📊 Data-Driven Product Strategy (SQL & Analytics)
 - [**Customer Success Operations: KPI Definition & SQL Data Modeling**](./case-studies/cs-operations-dashboard.md)
