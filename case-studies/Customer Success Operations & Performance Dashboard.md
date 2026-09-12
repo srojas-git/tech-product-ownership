@@ -52,6 +52,8 @@ To support deep-dive analysis, I architected a centralized Star Schema model. By
 - **Centralized Fact Table:** `Query1` aggregates revenue and rental events for precise KPI tracking.
 - **Multi-Dimensional Visibility:** Connections to `public_customer_list`, `public_staff_list`, `sales_by_store`, and `sales_by_film_category` allow leadership to pinpoint exactly which segments or team members are driving growth.
 
+![Star Schema in PowerBI](./assets/cs-star-schema.png)
+
 ### 3. Process Improvement & Visualization
 
 The dashboard follows an executive design philosophy focused on **Outcomes over Activity**:
@@ -59,6 +61,8 @@ The dashboard follows an executive design philosophy focused on **Outcomes over 
 - **Root Cause Identification:** Interactive drill-downs allow the team to understand the "why" behind performance trends.
 - **Clarity for Stakeholders:** Strategic use of whitespace and high-contrast KPI cards ensures leadership can identify pain points in seconds.
 - **Scalable Framework:** Built to handle ad-hoc questions from CS leadership regarding specific customer segments or regional shifts.
+
+![PowerBI Dashboard](./assets/cs-dashboard-preview.png)
 
 ## Results & Business Outcomes
 
