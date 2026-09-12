@@ -6,6 +6,8 @@ I'm a Technical Product Owner at Konrad Group, where I bridge business strategy,
 ## Case Studies
 
 ### 🔌 API & Platform Product Management
+- [**Cross-Team Dependency Mapping & Stakeholder Governance**](./case-studies/Cross-Team%20Dependency%20Mapping.md)
+  *Engineered an interactive stakeholder dependency mapping tool to resolve complex cross-stream integration blockers between Core Platform, APIs, SDKs, and Dev Docs. Reduced blocker escalation time from 3 days to same-day resolution, saving 15+ engineering hours per blocker and driving program-wide adoption. Technical Product Owner | Stakeholder Management | AI Prototyping.*
 - [**B2B2C Platform Governance: Standardized Core Epic Template for API Delivery**](./case-studies/B2B2C%20Platform%20Governance:%20Standardized%20Core%20Epic%20Template%20for%20API%20Delivery.md)
   *Standardized Core Epic Template for enterprise B2B2C API platforms. Features structured User Stories, Definition of Done, REST API/CI-CD guidelines, and Tech Lead solution design sections. Built to eliminate engineering ambiguity, streamline dev handoff, and enforce quality standards. Technical Product Owner | Jira | Agile.*
 
