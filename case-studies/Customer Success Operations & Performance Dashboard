@@ -1,14 +1,14 @@
 # Customer Success Operations & Performance Dashboard
-> **Tech Stack:** PostgreSQL (SQL Views), Power BI, Relational Data Modeling (Star Schema)[cite: 1]  
+- **Tech Stack:** PostgreSQL (SQL Views), Power BI, Relational Data Modeling (Star Schema)[cite: 1]  
 
 ## Context
 This project features an end-to-end BI pipeline designed to track customer behavior and revenue health[cite: 1]. I transformed raw relational data into a strategic tool for Customer Success leadership to monitor KPIs, identify churn risks, and uncover growth opportunities by ensuring a "single source of truth" across the organization[cite: 1].
 
 ## Problem
 To support data-driven decision-making, CS leadership needed to answer critical operational questions that were previously difficult to track due to fragmented data[cite: 1]:
-* **Customer Health & Revenue:** Monitoring monthly revenue trends to identify performance drivers and potential churn[cite: 1].
-* **Market Segmentation:** Analyzing top-performing categories and regions to optimize resource allocation for Customer Success Managers (CSMs)[cite: 1].
-* **Operational Efficiency:** Identifying high-value customers to prioritize proactive engagement and improve Customer Lifetime Value (CLV)[cite: 1].
+- **Customer Health & Revenue:** Monitoring monthly revenue trends to identify performance drivers and potential churn[cite: 1].
+- **Market Segmentation:** Analyzing top-performing categories and regions to optimize resource allocation for Customer Success Managers (CSMs)[cite: 1].
+- **Operational Efficiency:** Identifying high-value customers to prioritize proactive engagement and improve Customer Lifetime Value (CLV)[cite: 1].
 
 ## Actions & Technical Implementation
 
