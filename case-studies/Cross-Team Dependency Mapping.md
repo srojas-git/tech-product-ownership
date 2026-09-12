@@ -20,7 +20,7 @@ From there, I built an **interactive dependency mapping tool**, layered directly
 
 I also used this as a chance to sharpen how I work with AI as a build partner, not just a chat window. I iterated on the tool with an AI assistant through **multiple rounds of refinement** — testing the visual layout, catching edge cases in how dependencies rendered, and reworking the structure until it actually matched how the team thinks about blockers, not just how a first draft looked. That iterative back-and-forth is now part of how I prototype product tools in general.
 
-**[Launch Live Interactive Dependency Map](https://github.com/srojas-git/tech-product-ownership/blob/main/case-studies/index.html)**
+**[Launch Live Interactive Dependency Map](https://srojas-git.github.io/tech-product-ownership/)**
 
 ## Result
 What started as an unassigned operational fix quickly became a program-wide standard after executive review with Product Leadership. The impact across delivery, efficiency, and team culture was immediate:
