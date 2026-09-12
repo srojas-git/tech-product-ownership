@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams Overview</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --bg-color: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --border-color: #d2d2d7;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* View transitions */
+        .view-container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        
+        .view-container.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Apple-style card interactions */
+        .team-card {
+            background-color: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+        }
+
+        .team-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Mermaid Overrides for Minimalist Look */
+        .node rect, .node circle, .node ellipse, .node polygon, .node path {
+            fill: #ffffff !important;
+            stroke: var(--border-color) !important;
+            stroke-width: 1px !important;
+            rx: 12px !important; /* Rounded corners */
+            ry: 12px !important;
+        }
+        
+        .edgePath .path {
+            stroke: var(--border-color) !important;
+            stroke-width: 1.5px !important;
+            fill: none !important;
+        }
+
+        /* Anchor node styles to hide the dummy nodes completely */
+        .node.anchor rect, .node.anchor circle, .node.anchor ellipse, .node.anchor polygon, .node.anchor path {
+            fill: transparent !important;
+            stroke: transparent !important;
+        }
+
+        /* Node Text Content */
+        .node-content {
+            padding: 12px 20px;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .node-content .name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .node-content .role {
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.2;
+        }
+
+        /* Scrollable container for large charts */
+        #chart-wrapper {
+            overflow: auto;
+            width: 100%;
+            max-height: 65vh;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        #chart-container {
+            display: inline-block;
+            min-width: 100%;
+        }
+
+        /* Force SVG to a readable minimum width so it doesn't shrink */
+        #chart-container svg {
+            min-width: 750px !important;
+            max-width: none !important;
+            height: auto !important;
+            display: block;
+            margin: 0 auto;
+            transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.25s ease-out; /* Smooth zoom transition */
+        }
+
+        #chart-wrapper::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        #chart-wrapper::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #chart-wrapper::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        #chart-wrapper::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        /* Go back button hover */
+        .back-btn {
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <main class="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-center">
+        
+        <!-- LIST VIEW -->
+        <div id="list-view" class="view-container active w-full">
+            <header class="mb-8 text-center md:text-left pt-8">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Organization</h1>
+                <p class="text-lg text-gray-500 font-light">Select a team to view its structure.</p>
+            </header>
+
+            <div class="mb-8 relative max-w-md mx-auto md:mx-0">
+                <svg class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10.5A6.5 6.5 0 1 1 4 10.5a6.5 6.5 0 0 1 13 0z"></path>
+                </svg>
+                <input
+                    id="search-input"
+                    type="text"
+                    placeholder="Search people or teams..."
+                    class="w-full pl-11 pr-4 py-3 rounded-full border border-gray-200 bg-white text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-shadow"
+                    autocomplete="off"
+                />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="team-grid">
+                <!-- Javascript will inject team cards here -->
+            </div>
+        </div>
+
+        <!-- DETAIL VIEW -->
+        <div id="detail-view" class="view-container w-full">
+            <header class="mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <button onclick="window.goBack()" class="back-btn flex items-center text-[15px] font-medium group">
+                    <svg class="w-5 h-5 mr-1 transform transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    Go back
+                </button>
+                <h2 id="team-title" class="text-3xl font-bold tracking-tight text-center flex-grow md:pr-24">Team Name</h2>
+            </header>
+
+            <div class="flex flex-col lg:flex-row gap-8 items-stretch">
+                <!-- Left: Chart Panel (Horizontal Rectangle) -->
+                <div class="lg:w-[72%] bg-white rounded-[32px] shadow-sm border border-gray-100 p-6 md:p-10 flex items-center justify-center relative">
+                    
+                    <div class="absolute bottom-6 right-6 flex bg-white border border-gray-200 rounded-full shadow-sm overflow-hidden z-10" id="zoom-controls">
+                        <button onclick="window.zoomOut()" class="p-2.5 hover:bg-gray-50 text-gray-500 hover:text-gray-900 transition-colors focus:outline-none" title="Zoom Out">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+                        </button>
+                        <div class="w-px bg-gray-200"></div>
+                        <button onclick="window.zoomReset()" id="zoom-level-display" class="px-3 py-2.5 hover:bg-gray-50 text-gray-600 text-[13px] font-medium transition-colors min-w-[4rem] text-center focus:outline-none" title="Reset Zoom">
+                            100%
+                        </button>
+                        <div class="w-px bg-gray-200"></div>
+                        <button onclick="window.zoomIn()" class="p-2.5 hover:bg-gray-50 text-gray-500 hover:text-gray-900 transition-colors focus:outline-none" title="Zoom In">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </button>
+                    </div>
+
+                    <div id="chart-wrapper">
+                        <div id="chart-container"></div>
+                    </div>
+                </div>
+
+                <!-- Right: Description Panel (Vertical Rectangle) -->
+                <div class="lg:w-[28%] bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 flex flex-col">
+                    <h3 class="text-xl font-semibold mb-5 text-gray-900 border-b border-gray-100 pb-4">Team Description</h3>
+                    <div id="team-description" class="text-[15px] text-gray-600 leading-relaxed font-light flex-grow">
+                        <!-- Description will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        
+        mermaid.initialize({ 
+            startOnLoad: false,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                lineColor: '#d2d2d7',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+            },
+            flowchart: {
+                htmlLabels: true,
+                // 'linear' nos da un path simple con pocos puntos (idealmente solo
+                // inicio y fin). Lo usamos como base porque luego reescribimos
+                // manualmente el atributo "d" de cada línea para que sea un
+                // conector de organigrama real (vertical-horizontal-vertical).
+                curve: 'linear',
+                nodeSpacing: 40,
+                rankSpacing: 40
+            }
+        });
+
+        const teamsData = {
+            'eps-leadership': {
+                name: 'EPS Leadership',
+                description: 'Executive body spanning product management, design, and strategy that sets the program\'s overall vision, budget, and priorities. Establishes strategic business prioritization among competing initiatives, and approves schedule adjustments driven by level-of-effort (LOE) estimates and resource constraints.',
+                chart: `graph TD
+                    classDef anchor fill:none,stroke:none,color:transparent;
+
+                    MM["<div class='node-content'><div class='name'>Michael Mendelson</div><div class='role'>SVP, EPS</div></div>"]
+                    A_MM((" "))
+                    class A_MM anchor;
+                    MM --- A_MM
+
+                    PM["<div class='node-content'><div class='name'>Pete Morrill</div><div class='role'>VP, Product Management</div></div>"]
+                    MK["<div class='node-content'><div class='name'>Meaghan Kincaide</div><div class='role'>VP, Product Management</div></div>"]
+                    A_MM --- PM
+                    A_MM --- MK
+
+                    A_PM((" "))
+                    class A_PM anchor;
+                    PM --- A_PM
+                    SMU["<div class='node-content'><div class='name'>Sean Murphy</div><div class='role'>VP, Product Management</div></div>"]
+                    RU["<div class='node-content'><div class='name'>Raju U</div><div class='role'>VP, Product Management</div></div>"]
+                    A_PM --- SMU
+                    A_PM --- RU
+
+                    A_MK((" "))
+                    class A_MK anchor;
+                    MK --- A_MK
+                    JC["<div class='node-content'><div class='name'>James Cantwell</div><div class='role'>Sr. Director, Client Solutions</div></div>"]
+                    MSH["<div class='node-content'><div class='name'>Michael Short</div><div class='role'>Sr. Director, Product Management</div></div>"]
+                    SS["<div class='node-content'><div class='name'>Sarah Selser</div><div class='role'>Sr. Director, Product Design</div></div>"]
+                    A_MK --- JC
+                    A_MK --- MSH
+                    A_MK --- SS
+
+                    A_MSH((" "))
+                    class A_MSH anchor;
+                    MSH --- A_MSH
+                    MP["<div class='node-content'><div class='name'>Michael Paschke</div><div class='role'>Sr. Manager, Software Eng.</div></div>"]
+                    AR["<div class='node-content'><div class='name'>Allen Rodgers</div><div class='role'>Sr. Product Manager, Core + SDK</div></div>"]
+                    LH["<div class='node-content'><div class='name'>Loraine Howell</div><div class='role'>Sr. Product Manager, Platform Experience</div></div>"]
+                    PF["<div class='node-content'><div class='name'>Phil Freund</div><div class='role'>Sr. Product Manager</div></div>"]
+                    A_MSH --- MP
+                    A_MSH --- AR
+                    A_MSH --- LH
+                    A_MSH --- PF
+
+                    SR["<div class='node-content'><div class='name'>Samuel Rojas</div><div class='role'>Product Owner</div></div>"]
+                    LH --- SR`
+            },
+            'pe': {
+                name: 'Platform Experience (PE)',
+                description: 'Team that owns the Partner Console UI and the underlying Salesforce-based CRM platform. It serves as the core configuration and experience layer for financial institutions and commercial partners integrating credit and identity products. Manages the user interface, tenant configuration, the Global and Partner Catalog (GPC/TPC), webhooks, and security settings. Operates on 2-week sprint cycles and is responsible for backlog refinement (PBR), UAT sign-off, and coordinating bi-weekly release notes.',
+                chart: `graph TD
+                    classDef anchor fill:none,stroke:none,color:transparent;
+
+                    MK["<div class='node-content'><div class='name'>Meaghan Kincaide</div><div class='role'>VP, Product Management</div></div>"]
+                    MSH["<div class='node-content'><div class='name'>Michael Short</div><div class='role'>Sr. Director, Product Management</div></div>"]
+                    LH["<div class='node-content'><div class='name'>Loraine Howell</div><div class='role'>Senior Product Manager (PM)</div></div>"]
+                    MK --- MSH
+                    MSH --- LH
+
+                    A_LH((" "))
+                    class A_LH anchor;
+                    LH --- A_LH
+
+                    SR["<div class='node-content'><div class='name'>Samuel Rojas</div><div class='role'>Product Owner (PO)</div></div>"]
+                    JH["<div class='node-content'><div class='name'>Jerry Huber</div><div class='role'>Technical Program Manager (TPM)</div></div>"]
+                    NS["<div class='node-content'><div class='name'>Nikhilesh Shinde</div><div class='role'>Tech Lead</div></div>"]
+                    KA["<div class='node-content'><div class='name'>Kyle Alger</div><div class='role'>Technical Manager</div></div>"]
+                    MM["<div class='node-content'><div class='name'>Mallineni Manohar</div><div class='role'>Secondary Tech Lead / Developer</div></div>"]
+                    GB["<div class='node-content'><div class='name'>Geeta Boppana</div><div class='role'>Tech Lead (ReadMe & Okta)</div></div>"]
+                    
+                    A_LH --- SR
+                    A_LH --- JH
+                    A_LH --- NS
+                    A_LH --- KA
+                    A_LH --- MM
+                    A_LH --- GB`
+            },
+            'core': {
+                name: 'Connected Core',
+                description: 'Team responsible for the core business logic, experience APIs (MuleSoft), and the platform\'s underlying data services. It is PE\'s primary technical dependency partner, building the backend APIs that PE enables or configures within the Console and Yukon.',
+                chart: `graph TD
+                    classDef anchor fill:none,stroke:none,color:transparent;
+
+                    MK["<div class='node-content'><div class='name'>Meaghan Kincaide</div><div class='role'>VP, Product Management</div></div>"]
+                    MSH["<div class='node-content'><div class='name'>Michael Short</div><div class='role'>Sr. Director, Product Management</div></div>"]
+                    AR["<div class='node-content'><div class='name'>Allen Rodgers</div><div class='role'>Senior Product Manager (PM)</div></div>"]
+                    MK --- MSH
+                    MSH --- AR
+
+                    A_AR((" "))
+                    class A_AR anchor;
+                    AR --- A_AR
+
+                    J["<div class='node-content'><div class='name'>Joel Perez</div><div class='role'>Product Owner (PO)</div></div>"]
+                    JP["<div class='node-content'><div class='name'>Juan Porras</div><div class='role'>Tech Lead</div></div>"]
+                    
+                    A_AR --- J
+                    A_AR --- JP`
+            },
+            'sdk': {
+                name: 'Connected SDK',
+                description: 'Team responsible for developing client-side integration packages and tooling (Software Development Kits) that let partners embed solutions into their own web and mobile applications. Collaborates closely with PE on cross-functional initiatives such as CyberAgent and Vendor Management.',
+                chart: `graph TD
+                    classDef anchor fill:none,stroke:none,color:transparent;
+
+                    MK["<div class='node-content'><div class='name'>Meaghan Kincaide</div><div class='role'>VP, Product Management</div></div>"]
+                    MSH["<div class='node-content'><div class='name'>Michael Short</div><div class='role'>Sr. Director, Product Management</div></div>"]
+                    AR["<div class='node-content'><div class='name'>Allen Rodgers</div><div class='role'>Senior Product Manager (PM)</div></div>"]
+                    MK --- MSH
+                    MSH --- AR
+
+                    A_AR((" "))
+                    class A_AR anchor;
+                    AR --- A_AR
+
+                    AO["<div class='node-content'><div class='name'>Armando Obando</div><div class='role'>Product Owner (PO)</div></div>"]
+                    EA["<div class='node-content'><div class='name'>Emeline Abumbi</div><div class='role'>Technical Program Manager (TPM)</div></div>"]
+                    
+                    A_AR --- AO
+                    A_AR --- EA`
+            },
+            'he': {
+                name: 'Hosted Experiences',
+                description: 'Team focused on developing and implementing white-label hosted web solutions and monetized subscription experiences for partners. Depends on PE to enable architecture configurations in the Yukon backend when launching or updating subscription modules.',
+                chart: `graph TD
+                    MK["<div class='node-content'><div class='name'>Meaghan Kincaide</div><div class='role'>VP, Product Management</div></div>"]
+                    MSH["<div class='node-content'><div class='name'>Michael Short</div><div class='role'>Sr. Director, Product Management</div></div>"]
+                    PF["<div class='node-content'><div class='name'>Phil Freund</div><div class='role'>Senior Product Manager (PM)</div></div>"]
+                    T["<div class='node-content'><div class='name'>Talon Zhu</div><div class='role'>Product Owner (PO)</div></div>"]
+                    MK --- MSH
+                    MSH --- PF
+                    PF --- T`
+            },
+            'analytics': {
+                name: 'Analytics',
+                description: 'Team responsible for business analytics infrastructure, usage metrics, and the integration of data intelligence tools such as Tableau, ThoughtSpot, and Pendo. Designs the platform\'s data consumption models and reporting.',
+                chart: `graph TD
+                    TBD["<div class='node-content'><div class='name'>TBD</div><div class='role'>Product Owner (PO)</div></div>"]
+                    SC["<div class='node-content'><div class='name'>Stwart Cerdas</div><div class='role'>Technical Program Manager (TPM)</div></div>"]`
+            },
+            'dev-docs': {
+                name: 'Dev Docs',
+                description: 'Team responsible for managing, structuring, and publishing the technical documentation portal for developers and commercial partners (ReadMe). Manages the publication of bi-weekly release notes and technical guides, and the integration of AI features (Ask AI, LLMs.txt, MCP). PE collaborates directly with this team by sending validated drafts ahead of each production deployment.',
+                chart: `graph TD
+                    classDef anchor fill:none,stroke:none,color:transparent;
+                    RC["<div class='node-content'><div class='name'>Robin Countryman</div><div class='role'>Lead / Manager de Dev Docs</div></div>"]
+                    A_RC((" "))
+                    class A_RC anchor;
+                    RC --- A_RC
+
+                    SR["<div class='node-content'><div class='name'>Shane Ramsey</div><div class='role'>Technical Writer</div></div>"]
+                    SS["<div class='node-content'><div class='name'>Shuba Subramaniam</div><div class='role'>Technical Writer</div></div>"]
+                    
+                    A_RC --- SR
+                    A_RC --- SS`
+            },
+            'shared-services': {
+                name: 'Shared Services',
+                description: 'Central infrastructure team providing cross-platform services, environment maintenance, and system migrations. Handles infrastructure updates and environment migrations.',
+                chart: `graph TD
+                    R["<div class='node-content'><div class='name'>Rajesh</div><div class='role'>Shared Services Lead</div></div>"]
+                    P["<div class='node-content'><div class='name'>Praveen</div><div class='role'>Shared Services Lead</div></div>"]`
+            }
+        };
+
+        // Extrae los nombres de las personas de cada equipo directamente del
+        // string del diagrama (los <div class='name'>...</div>), para poder
+        // buscarlas sin tener que mantener una lista aparte a mano.
+        function extractMemberNames(chart) {
+            const matches = [...chart.matchAll(/class='name'>([^<]+)</g)];
+            return matches.map((m) => m[1]);
+        }
+        Object.keys(teamsData).forEach((key) => {
+            teamsData[key].members = extractMemberNames(teamsData[key].chart);
+        });
+
+        // Inject cards into the DOM
+        const grid = document.getElementById('team-grid');
+        const searchInput = document.getElementById('search-input');
+
+        function renderTeamGrid(query) {
+            const q = (query || '').trim().toLowerCase();
+            grid.innerHTML = '';
+
+            Object.keys(teamsData).forEach((key) => {
+                const team = teamsData[key];
+                const teamNameMatches = team.name.toLowerCase().includes(q);
+                const matchedMember = team.members.find((name) => name.toLowerCase().includes(q));
+
+                if (q && !teamNameMatches && !matchedMember) return;
+
+                const card = document.createElement('div');
+                card.className = 'team-card p-6 flex justify-between items-center group';
+                card.onclick = () => window.showTeam(key);
+                card.innerHTML = `
+                    <div>
+                        <span class="text-[17px] font-semibold tracking-tight block">${team.name}</span>
+                        ${
+                            q && matchedMember && !teamNameMatches
+                                ? `<span class="text-[13px] text-gray-400 mt-1 block">Match: ${matchedMember}</span>`
+                                : ''
+                        }
+                    </div>
+                    <svg class="w-5 h-5 text-gray-300 group-hover:text-gray-600 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                `;
+                grid.appendChild(card);
+            });
+
+            if (grid.children.length === 0) {
+                grid.innerHTML = '<div class="col-span-1 md:col-span-2 text-center text-gray-400 py-10 text-[15px]">No matches found.</div>';
+            }
+        }
+
+        renderTeamGrid('');
+        searchInput.addEventListener('input', (e) => renderTeamGrid(e.target.value));
+
+        /**
+         * Reescribe cada línea del diagrama como un conector recto tipo
+         * organigrama: baja en vertical desde el nodo padre, corta en
+         * horizontal a la altura media y vuelve a bajar en vertical hasta
+         * el nodo hijo. Solo usamos el punto inicial y final del path que
+         * generó Mermaid (ignoramos los puntos intermedios de la curva,
+         * que son los que causaban las "quebradas").
+         *
+         * Además, los nodos "ancla" (el punto invisible donde el tronco se
+         * abre hacia varios hijos) tienen su propio ancho, y Mermaid conecta
+         * cada línea a un punto distinto de su borde en vez de a un único
+         * punto central. Eso genera el corte/gap doble en el medio del
+         * árbol. Para evitarlo, "enganchamos" cualquier extremo de línea
+         * que caiga dentro del área de un nodo ancla al centro exacto de
+         * ese nodo, así todas las ramas nacen del mismo punto.
+         */
+        function straightenEdges(container) {
+            const svg = container.querySelector('svg');
+            if (!svg) return;
+            // Todo dentro del SVG de Mermaid cuelga de un único <g> raíz
+            // (el que centra/escala el diagrama completo). Tanto los nodos
+            // como las líneas están definidos en el espacio de coordenadas
+            // de ese <g>, así que lo usamos como marco de referencia común.
+            const rootGroup = svg.querySelector(':scope > g') || svg;
+            const rootCTM = rootGroup.getCTM();
+
+            // Convierte el centro local de un nodo (getBBox, que NO incluye
+            // su propio transform) al mismo espacio de coordenadas donde
+            // viven los puntos "d" de las líneas. Usar el transform en
+            // crudo (regex) es frágil; getCTM()/matrixTransform() es la
+            // forma correcta de SVG para hacer este cambio de espacio sin
+            // importar cuántos <g> anidados haya de por medio.
+            function absoluteCenter(node) {
+                const bbox = node.getBBox();
+                const pt = svg.createSVGPoint();
+                pt.x = bbox.x + bbox.width / 2;
+                pt.y = bbox.y + bbox.height / 2;
+                const nodeCTM = node.getCTM();
+                if (!rootCTM || !nodeCTM) return { x: pt.x, y: pt.y };
+                const relative = rootCTM.inverse().multiply(nodeCTM);
+                const transformed = pt.matrixTransform(relative);
+                return { x: transformed.x, y: transformed.y };
+            }
+
+            const anchors = [];
+            container.querySelectorAll('.node.anchor').forEach((node) => {
+                const center = absoluteCenter(node);
+                const bbox = node.getBBox();
+                // El radio de "imán" tiene que cubrir, como mínimo, el
+                // propio radio del nodo ancla (las líneas nacen justo en su
+                // borde, no en su centro) más un margen de seguridad.
+                const radius = Math.max(bbox.width, bbox.height) / 2 + 10;
+                anchors.push({ x: center.x, y: center.y, radius });
+            });
+
+            function snapToAnchor(x, y) {
+                for (const a of anchors) {
+                    const dist = Math.hypot(x - a.x, y - a.y);
+                    if (dist <= a.radius) return { x: a.x, y: a.y };
+                }
+                return { x, y };
+            }
+
+            const paths = container.querySelectorAll('.edgePath path, .edgePaths path');
+            paths.forEach((path) => {
+                const numbers = path.getAttribute('d').match(/-?\d+(\.\d+)?/g);
+                if (!numbers || numbers.length < 4) return;
+
+                let x1 = parseFloat(numbers[0]);
+                let y1 = parseFloat(numbers[1]);
+                let x2 = parseFloat(numbers[numbers.length - 2]);
+                let y2 = parseFloat(numbers[numbers.length - 1]);
+
+                const p1 = snapToAnchor(x1, y1);
+                const p2 = snapToAnchor(x2, y2);
+                x1 = p1.x; y1 = p1.y;
+                x2 = p2.x; y2 = p2.y;
+
+                // Si el nodo padre e hijo ya están alineados en X, una línea
+                // vertical simple es suficiente y se ve más limpia.
+                if (Math.abs(x1 - x2) < 1) {
+                    path.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
+                    return;
+                }
+
+                const midY = y1 + (y2 - y1) / 2;
+                path.setAttribute(
+                    'd',
+                    `M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}`
+                );
+            });
+        }
+
+        // Handle navigation and rendering
+        window.showTeam = async function(teamKey) {
+            const team = teamsData[teamKey];
+            
+            // Switch views smoothly
+            const listView = document.getElementById('list-view');
+            const detailView = document.getElementById('detail-view');
+            
+            listView.style.opacity = 0;
+            
+            setTimeout(async () => {
+                listView.classList.remove('active');
+                detailView.classList.add('active');
+                
+                // Update text
+                document.getElementById('team-title').innerText = team.name;
+                document.getElementById('team-description').innerText = team.description;
+                
+                // Render chart
+                const container = document.getElementById('chart-container');
+                container.innerHTML = '<div class="text-gray-400 text-sm animate-pulse">Loading structure...</div>'; // minimal loading state
+                
+                try {
+                    const { svg } = await mermaid.render('mermaid-svg-' + teamKey, team.chart);
+                    container.innerHTML = svg;
+                    straightenEdges(container);
+                    
+                    // Reset zoom state on new chart load
+                    currentScale = 1;
+                    document.getElementById('zoom-level-display').innerText = '100%';
+                } catch (error) {
+                    container.innerHTML = '<div class="text-red-400">Failed to load chart.</div>';
+                    console.error(error);
+                }
+
+                // Trigger fade in for details
+                setTimeout(() => { detailView.style.opacity = 1; }, 50);
+
+            }, 400); // Wait for fade out
+        };
+
+        window.goBack = function() {
+            const listView = document.getElementById('list-view');
+            const detailView = document.getElementById('detail-view');
+            
+            detailView.style.opacity = 0;
+            
+            setTimeout(() => {
+                detailView.classList.remove('active');
+                listView.classList.add('active');
+                
+                // Trigger fade in for list
+                setTimeout(() => { listView.style.opacity = 1; }, 50);
+            }, 400);
+        };
+
+        let currentScale = 1;
+        
+        window.zoomIn = function() {
+            currentScale += 0.2;
+            applyZoom();
+        };
+
+        window.zoomOut = function() {
+            currentScale = Math.max(0.4, currentScale - 0.2); // Limit zoom out to 40%
+            applyZoom();
+        };
+
+        window.zoomReset = function() {
+            currentScale = 1;
+            applyZoom();
+        };
+
+        function applyZoom() {
+            const svg = document.querySelector('#chart-container svg');
+            if (svg) {
+                if (!svg.dataset.baseWidth) {
+                    // Get natural base width from viewBox to scale proportionally
+                    const viewBox = svg.getAttribute('viewBox');
+                    let baseWidth = svg.getBoundingClientRect().width;
+                    if (viewBox) {
+                        baseWidth = parseFloat(viewBox.split(' ')[2]);
+                    }
+                    svg.dataset.baseWidth = baseWidth;
+                }
+                
+                const newWidth = parseFloat(svg.dataset.baseWidth) * currentScale;
+                
+                // Override the CSS min-width dynamically so it can shrink
+                svg.style.setProperty('min-width', '0px', 'important'); 
+                svg.style.width = `${newWidth}px`;
+                
+                document.getElementById('zoom-level-display').innerText = Math.round(currentScale * 100) + '%';
+            }
+        }
+    </script>
+</body>
+</html>
