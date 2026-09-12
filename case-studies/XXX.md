@@ -1,6 +1,5 @@
 # Cross-Team Dependency Mapping — Platform Experience (PE)
 
-**Category:** Agile Delivery & Product Discovery
 
 ## Context
 The Platform Experience (PE) team sits at the center of the Experian Partner Services delivery model — the console and CRM configuration layer that every other stream (Connected Core, Connected SDK, Hosted Experiences, Dev Docs) has to pass through in some form. Despite that central position, there was no shared, explicit map of how PE blocked other teams, how other teams blocked PE, or what specifically was being exchanged (an API, a configuration, a piece of documentation, an approval).
