@@ -1,4 +1,4 @@
-# B2B2C Platform Governance: Standardized Core Epic Template
+# B2B2C Platform Governance: Standardized Epic Template
 
 ## Context
 
@@ -34,11 +34,11 @@ I identified this as a systemic, org-level gap rather than a team-specific issue
 
 | Field | Value |
 | :--- | :--- |
-| **Epic Name:** | Partner Webhook Retry Mechanism |
+| **Epic Name:** | Webhook Retry Mechanism |
 | **Sprint:** | Sprint 34 |
 | **Project Category:** | Platform Experience |
 | **Investment Category:** | Reliability |
-| **Business Line:** | Partner Solutions |
+| **Business Line:** | Solutions |
 | **Work Type:** | Feature Enhancement |
 | **Domain / Group Owning:** | Connected Platform |
 | **Date/Time Groomed:** | 15/Sep/26 |
