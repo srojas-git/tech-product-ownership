@@ -49,7 +49,8 @@ Attrition Rate = DIVIDE([Attrition Count], [Total Employees], 0)
 ### 6. Interactive Dashboard Design
 I designed a two-page report separating **"what is happening"** (Executive Summary: demographics, hotspots by department/role, compensation vs. retention) from **"why it is happening"** (Operational Drivers: overtime burnout, manager-tenure risk, travel and commute impact). The final UI uses a dark-mode executive aesthetic with a fixed KPI/navigation panel and consistent color coding (turquoise = retained, orange = attrited).
 
-![Final Power BI dashboard — Executive Summary and Operational Drivers](./assets/hr-powerbi-dashboard-final.png)
+![Final Power BI dashboard — Executive Summary and Operational Drivers](./assets/hr-powerbi-dashboard-final1.png)
+![Final Power BI dashboard — Executive Summary and Operational Drivers](./assets/hr-powerbi-dashboard-final2.png)
 
 ## Results & Business Outcomes
 - **Data Integrity:** Achieved 100% completeness across all critical columns, verified through automated auditing.
