@@ -17,11 +17,5 @@ I'm a Technical Product Owner at Konrad Group, where I bridge business strategy,
 - [**HR Analytics - Uncovering the Drivers of Employee Attrition**](./case-studies/HR%20Analytics.md)
   *Owned the discovery phase on a complex HR dataset, using feature engineering (Power Query/VBA) to surface the drivers behind "Year 0" attrition. Reframed raw turnover metrics into a set of product recommendations aimed at reducing new-manager friction and early burnout.*
 
-### 🚀 Agile Delivery & Product Discovery (Coming Soon)
-- [**Product Requirement Document (PRD) & BDD Acceptance Criteria**](./case-studies/prd-bdd-template.md) *(Placeholder)*
-- [**User Journey Mapping & Design Thinking Facilitation**](./case-studies/user-journey-discovery.md) *(Placeholder)*
-- [**Backlog Grooming & Cross-Functional Dependency Mapping**](./case-studies/agile-backlog-management.md) *(Placeholder)*
-- [**Go-to-Market Strategy & Release Notes Communication**](./case-studies/release-planning-gtm.md) *(Placeholder)*
-
 ## Contact
 www.linkedin.com/in/samuelrojasg | samurg44@gmail.com
