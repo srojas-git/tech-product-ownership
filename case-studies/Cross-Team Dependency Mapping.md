@@ -7,7 +7,7 @@ Every fast-moving platform team eventually hits the same wall: everyone is busy,
 When a blocker surfaced, the response was always the same **scramble**: someone would ping three, four, five people across different teams just to find out who could actually unblock the item. It wasn't a knowledge problem — it was a **visibility** problem. On average, that scramble alone burned roughly **3 days per blocker**, before a single minute of real resolution work had even started.
 
 ## My Role
-"This wasn't in my job description or assigned to my backlog. As Product Owner for the Experience Platform team, I spotted a operational pattern hurting overall program velocity and took the initiative to solve it, driving value far beyond my primary scope."
+This wasn't in my job description or assigned to my backlog. As Product Owner for the Experience Platform team, I spotted a operational pattern hurting overall program velocity and took the initiative to solve it, driving value far beyond my primary scope.
 
 ## Artifact / Action
 I ran structured alignment sessions with the Product Owners of every dependent stream, and for each integration point we nailed down three things:
