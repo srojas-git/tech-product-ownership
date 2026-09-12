@@ -14,7 +14,7 @@ I'm a Technical Product Owner at Konrad Group, where I bridge business strategy,
 ### 📊 Data-Driven Product Strategy (Excel | SQL | PowerBI)
 - [**Customer Success Operations & Performance Dashboard**](./case-studies/Customer%20Success%20Operations%20&%20Performance%20Dashboard.md)
   *Defined and modeled the Core KPIs (CLV, Churn Risk) that CS leadership needed to move from reactive to proactive account management. Architected a Star Schema in PostgreSQL and built the Power BI layer on top, turning fragmented usage data into a single source of truth for engagement decisions.*
-- [**HR Attrition Analytics: Root Cause Analysis & Retention Strategy**](./case-studies/hr-attrition-analytics.md)
+- [**HR Analytics - Uncovering the Drivers of Employee Attrition**](./case-studies/HR%20Analytics.md)
   *Owned the discovery phase on a complex HR dataset, using feature engineering (Power Query/VBA) to surface the drivers behind "Year 0" attrition. Reframed raw turnover metrics into a set of product recommendations aimed at reducing new-manager friction and early burnout.*
 
 ### 🚀 Agile Delivery & Product Discovery (Coming Soon)
