@@ -41,3 +41,32 @@ JOIN inventory i ON r.inventory_id = i.inventory_id
 JOIN film f ON i.film_id = f.film_id
 JOIN film_category fc ON f.film_id = fc.film_id
 JOIN category cat ON fc.category_id = cat.category_id;
+```
+
+**[View Full SQL View Script Definitions in Repository](../sql/cs_analytics_views.sql)**
+
+### 2. Data Architecture & Relational Modeling (Star Schema)
+
+To support deep-dive analysis, I architected a centralized Star Schema model. By establishing relationships between the core transactional data (`Query1`) and key operational dimensions, the model enables seamless cross-filtering across customer demographics and staff performance.
+
+- **Centralized Fact Table:** `Query1` aggregates revenue and rental events for precise KPI tracking.
+- **Multi-Dimensional Visibility:** Connections to `public_customer_list`, `public_staff_list`, `sales_by_store`, and `sales_by_film_category` allow leadership to pinpoint exactly which segments or team members are driving growth.
+
+### 3. Process Improvement & Visualization
+
+The dashboard follows an executive design philosophy focused on **Outcomes over Activity**:
+
+- **Root Cause Identification:** Interactive drill-downs allow the team to understand the "why" behind performance trends.
+- **Clarity for Stakeholders:** Strategic use of whitespace and high-contrast KPI cards ensures leadership can identify pain points in seconds.
+- **Scalable Framework:** Built to handle ad-hoc questions from CS leadership regarding specific customer segments or regional shifts.
+
+## Results & Business Outcomes
+
+- **System Optimization:** Improved reporting efficiency by automating transformations via SQL.
+- **Repeatable Data Models:** Built a scalable architecture for monitoring recurring operational processes.
+- **Actionable Insights:** Translated complex rental datasets into a clear narrative for process improvement and executive presentations.
+- **Key Executive Metrics Delivered:**
+  - **$61.31K** Total Revenue tracked.
+  - **599** Active Customers monitored.
+  - **108** Market Reach locations analyzed.
+  - **14.596K** Total Rentals processed.
