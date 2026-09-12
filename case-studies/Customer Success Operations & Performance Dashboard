@@ -43,7 +43,7 @@ JOIN film_category fc ON f.film_id = fc.film_id
 JOIN category cat ON fc.category_id = cat.category_id;
 ```[cite: 1]
 
-> **[View Full SQL View Script Definitions in Repository](../sql/cs_analytics_views.sql)**
+**[View Full SQL View Script Definitions in Repository](../sql/cs_analytics_views.sql)**
 
 ### 2. Data Architecture & Relational Modeling (Star Schema)
 To support deep-dive analysis, I architected a centralized Star Schema model[cite: 1]. By establishing relationships between the core transactional data (`Query1`) and key operational dimensions, the model enables seamless cross-filtering across customer demographics and staff performance[cite: 1].
