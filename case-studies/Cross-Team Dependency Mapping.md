@@ -1,22 +1,24 @@
 # Cross-Team Dependency Mapping
 
 ## Context
-The Platform Experience team sits at the center of a global B2B SaaS platform's delivery model — serving as the core configuration and management layer that multiple feature streams (**Backend Core APIs**, **Client SDKs**, **Hosted Solutions**, **Developer Documentation**) must integrate with. Despite this central position, there was no shared, explicit map of cross-team dependencies, blocker pathways, or specific deliverables (APIs, configurations, documentation, or approvals).
+Every fast-moving platform team eventually hits the same wall: everyone is busy, everyone is shipping, but **nobody can draw the map of how the pieces actually connect**. That was exactly the situation on the Platform Experience team — the core configuration and management layer that every other stream (**Backend Core APIs**, **Client SDKs**, **Hosted Solutions**, **Developer Documentation**) had to pass through to ship anything. We were the connective tissue of the platform, and yet there was no shared, explicit map of who depended on whom, why, or for what.
 
 ## The Problem
-Without a clear dependency map, teams routinely experienced the same delivery bottleneck: when a blocker surfaced, team members would **"double-step"** — messaging multiple contacts across various departments to locate the right owner. On average, this coordination friction added roughly **3 days of delay** per blocker before actual resolution work could even begin.
+When a blocker surfaced, the response was always the same **scramble**: someone would ping three, four, five people across different teams just to find out who could actually unblock the item. It wasn't a knowledge problem — it was a **visibility** problem. On average, that scramble alone burned roughly **3 days per blocker**, before a single minute of real resolution work had even started.
 
 ## My Role
-Initiated and executed this cross-team dependency mapping as a **proactive product ownership improvement** outside my core backlog scope to eliminate program-level delivery bottlenecks.
+This wasn't in my job description. Nobody assigned it, and no ticket asked for it. I saw a pattern costing the whole program real velocity, and I decided that fixing it — even outside my core backlog scope — would pay for itself many times over.
 
 ## Artifact / Action
-I structured alignment sessions with Product Owners across dependent engineering streams to define, for every integration point:
+I ran structured alignment sessions with the Product Owners of every dependent stream, and for each integration point we nailed down three things:
 
-- **Direction**: Inbound (blocking the core platform) vs. Outbound (blocking dependent teams).
-- **Dependency Type**: Technical (APIs/backend), configuration, or documentation/compliance.
-- **Ownership**: Direct point-of-contact for resolution, moving beyond generic team tags.
+- **Direction** — Inbound (blocking the core platform) vs. Outbound (blocking a dependent team)
+- **Dependency Type** — Technical (APIs/backend), configuration, or documentation/compliance
+- **Ownership** — a real point-of-contact, not a generic team name
 
-I consolidated these insights into an **interactive dependency mapping tool** integrated with the organizational view, enabling team members to identify direct escalation paths immediately.
+From there, I built an **interactive dependency mapping tool**, layered directly on top of the team's org chart, so anyone hitting a blocker could see instantly who to go to and why.
+
+I also used this as a chance to sharpen how I work with AI as a build partner, not just a chat window. I iterated on the tool with an AI assistant through **multiple rounds of refinement** — testing the visual layout, catching edge cases in how dependencies rendered, and reworking the structure until it actually matched how the team thinks about blockers, not just how a first draft looked. That iterative back-and-forth is now part of how I prototype product tools in general.
 
 ## Result
-The framework was **adopted program-wide** after review by Product Leadership. Escalation time for cross-team blockers dropped from an average of **~3 days to same-day resolution** in most cases, significantly accelerating overall delivery velocity across dependent streams.
+The framework was **adopted program-wide** after review by Product Leadership. Escalation time for cross-team blockers dropped from an average of **~3 days to same-day resolution** in most cases — turning a recurring source of lost velocity into a five-minute lookup.
