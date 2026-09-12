@@ -37,6 +37,7 @@ I dropped a corrupted `DateofJoining` field in favor of the already-clean `Years
 I built a custom VBA macro that scans the full dataset on demand, calculates completeness per column, and generates a formatted audit report with conditional highlighting — confirming a **100% completeness rate** before the data reached Power BI.
 
 ![VBA-generated Data Quality Report](./assets/hr-vba-quality-report.png)
+**[View Full VBA Script Definitions in Repository](../vba/vba_hr_data_quality_report.bas)**
 
 ### 5. Data Modeling & DAX (Power BI)
 I connected Power BI directly to the cleaned Excel workbook and built a dedicated `Measures` table with core DAX KPIs powering the entire dashboard:
