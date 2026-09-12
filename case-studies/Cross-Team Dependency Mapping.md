@@ -1,7 +1,7 @@
 # Cross-Team Dependency Mapping
 
 ## Context
-Every fast-moving platform team eventually hits the same wall: everyone is busy, everyone is shipping, but nobody can draw the map of how the pieces actually connect. That was exactly the situation when I joined as *Product Owner* for the Platform Experience team — the core configuration and management layer that every other stream *(Backend Core APIs, Client SDKs, Hosted Solutions, Developer Documentation)* had to pass through to ship anything. We were the connective tissue of the platform, and yet there was no shared, explicit map of who depended on whom, why, or for what.
+Every fast-moving platform team eventually hits the same wall: everyone is busy, everyone is shipping, but nobody can draw the map of how the pieces actually connect. That was exactly the situation when I joined as **Product Owner** for the Platform Experience team — the core configuration and management layer that every other stream **(Backend Core APIs, Client SDKs, Hosted Solutions, Developer Documentation)** had to pass through to ship anything. We were the connective tissue of the platform, and yet there was no shared, explicit map of who depended on whom, why, or for what.
 
 ## The Problem
 When a blocker surfaced, the response was always the same **scramble**: someone would ping three, four, five people across different teams just to find out who could actually unblock the item. It wasn't a knowledge problem — it was a **visibility** problem. On average, that scramble alone burned roughly **3 days per blocker**, before a single minute of real resolution work had even started.
