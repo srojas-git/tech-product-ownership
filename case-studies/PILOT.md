@@ -10,7 +10,7 @@ Work moves through a multi-stage workflow (Submitted, In Progress, Code Review, 
 
 ## The Problem
 
-**The problem:** the board no longer reflected the real state of the work, and I had no reliable, daily way to see where the sprint actually stood.
+**The board no longer reflected the real state of the work, and I had no reliable, daily way to see where the sprint actually stood.
 
 **What it looked like:**
 
