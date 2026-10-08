@@ -4,58 +4,33 @@
 
 I'm the Product Owner of the Platform Experience team, the configuration and management layer of a B2B2C platform. Every other stream (core APIs, client SDKs, hosted solutions, developer documentation) has to pass through our layer to ship, so our backlog isn't a single team's backlog. It holds **multiple epics from different teams**, from customer-facing console features and security capabilities to partner integrations and production support.
 
-Sprints run two weeks, and on average we carry **~61 primary items per sprint** (stories, tasks and bugs, excluding sub-tasks).
+Sprints run two weeks, and on average we carry **~61 primary items per sprint** (stories, tasks and bugs, excluding sub-tasks), based on the last five sprints: 55, 67, 61, 58 and 64.
 
 Work moves through a multi-stage workflow (Submitted, In Progress, Code Review, Ready for QA, In QA Review, Ready for UAT, plus Blocked), and the team runs four stand-ups a week, one of them focused on estimation, plus product backlog refinement. Keeping that board accurate depends on delivery hygiene: timely status updates, blocker follow-up and cross-team dependency tracking.
 
 ## The Problem
 
-**The board no longer reflected the real state of the work, and I had no reliable, daily way to see where the sprint actually stood.
+At one point in the quarter, the board stopped telling the truth. **23 items** were sitting in "Ready for QA" or "In QA Review", 18 of them in the active sprint, and **10 had been waiting 25+ days (~1.8 sprints)**. Three items had triggered Jira's automatic alert for carrying over **9 sprints** without closing. Statuses often contradicted reality: QA hours were logged against items still marked "Ready for QA", an item rejected in review still looked like it was waiting for QA, and one fix sat untested for **31 days (~2.2 sprints)** after development finished it. Other items had been in the same status for **20+ days (~1.4 sprints)** with no documented reason, blocked items carried no reason or cited dependencies that were already Done or Cancelled, and whole chains of related stories hadn't started with nothing on the board to explain why.
 
-**What it looked like:**
+The pain point wasn't missing data; it was missing a trustworthy daily signal. Keeping the board accurate relied on manual follow-up that wasn't happening consistently, and stand-ups had moved to a fast, epic-level review where individual stale items were easy to miss. When a blocker was raised, it was acknowledged without an owner or a next step, and some were never raised at all. To compensate, I audited the backlog by hand for **~45 minutes every day**, effectively covering two roles: owning the product and auditing the board.
 
-- **23 items** were sitting in "Ready for QA" or "In QA Review" at one point, 18 of them in the active sprint. **10 of those had waited 25+ days (~1.8 sprints).**
-- **3 items triggered the tool's automatic alert** for carrying over **9 sprints** without closing.
-- **Statuses contradicted reality.** QA time was logged on items still showing "Ready for QA". An item rejected in review still showed as waiting for QA. A fix sat untested for **31 days (~2.2 sprints)** after development finished it.
-- **Items sat in the same status for 20+ days (~1.4 sprints)** with no documented reason.
-- **Blocked items had no documented reason**, or cited dependencies that were already Done or Cancelled. One blocker on another team had no ticket and no owner.
-- **Entire chains of related stories had not started**, with nothing on the board explaining why.
-
-**The pain point:** this wasn't a lack of data. It was a lack of a trustworthy, daily signal. Board hygiene depended on manual follow-up, and stand-ups had moved to a fast, epic-level review that made individual stale items easy to miss. When a blocker was raised, it was acknowledged without an owner or a next step, and some blockers were never raised at all. To compensate, I audited the backlog by hand for **~45 minutes every day**, effectively covering two roles: owning the product and auditing the board.
-
-**The consequences:**
-
-- **Late decisions.** Blockers surfaced late or never, so unblocking, re-prioritization and escalation all happened late.
-- **Invisible blockers.** Some were never mentioned in the daily scrum. I learned about them live in the meeting, or not at all.
-- **Wasted meeting time.** Stand-ups were spent asking for status instead of resolving issues.
-- **Hidden capacity problems.** Active QA work looked idle, rejected work looked like it was waiting for QA, and overloaded people or people who had left the team stayed hidden behind stale statuses.
-- **Weak forecasting.** From the board alone, I couldn't tell what was in progress versus genuinely stopped, which undermined delivery forecasts and stakeholder updates.
-- **Risk to priority commitments.** Critical items for a strategic partner and a security capability required by a customer went untouched or unstarted for most of a sprint.
-- **Lost PO time.** Hours each week went to manual auditing instead of refinement and stakeholder work.
+The cost added up. Blockers surfaced late or not at all, so unblocking and escalation happened late. Stand-up time went to asking for status instead of solving problems. Active QA work looked idle, while overloaded or departed team members stayed hidden behind stale statuses. And I couldn't separate what was in progress from what was truly stopped, which weakened forecasts and stakeholder updates, with critical items for a strategic partner and a customer-required security capability among those affected.
 
 ## My Role
 
-This wasn't in my job description or on my backlog. As Product Owner, I'm accountable for the backlog and for outcomes, and that accountability rests on transparency: if I can't see where the sprint really stands, I can't inspect progress, re-prioritize or help unblock the team. So I treated the visibility gap as a product problem, with a user (me), a job to be done and testable success criteria.
+This wasn't in my job description or on my backlog. As Product Owner, I'm accountable for the backlog and for outcomes, and that accountability rests on transparency: if I can't see where the sprint really stands, I can't inspect progress, re-prioritize or help unblock the team.
 
-**From pain point to requirement.** I wrote it as an enabler story with acceptance criteria:
+As a technical PO, I don't stop at flagging a gap. I sit between business intent and engineering reality, I understand how the workflow, the data behind it and the integrations fit together, and I'm comfortable building the tooling when it doesn't exist. So I treated the visibility gap like any other product problem: start from the need, define what "good" looks like, and ship the smallest thing that works.
 
-> As a Product Owner of a multi-team backlog,
-> I want a daily briefing of what changed, what is blocked and what has stalled,
-> So that I can lead every stand-up with a clear view of the sprint and act on blockers the same day.
+**The solution** is an AI agent built on Claude and connected to Jira, Confluence and Slack through MCP connectors. Every weekday at 6:30 am it audits the active sprint, compares it with the previous day's report, and delivers a one-page briefing to Confluence plus a short summary in Slack. The full design is in the next section.
 
-- *Given* a new weekday morning, *when* the briefing runs, *then* I receive a one-page report before the first stand-up covering the last 24 hours (on Mondays, since Friday).
-- *Given* a ticket is Blocked, *when* it appears in the report, *then* it shows how long it has been blocked and whether its reason is documented, partial or missing.
-- *Given* a ticket has stayed in one status for 5+ days, *then* it appears with its exact age.
-- *Given* the system cannot verify a fact, *then* it is listed under "Data gaps" instead of guessed.
+**How I thought about it:**
 
-**The solution.** An AI agent, built on Claude and connected to Jira, Confluence and Slack through MCP connectors, that runs as a scheduled task every weekday at 6:30 am. It audits the active sprint, compares it against the previous day's report, and delivers a one-page briefing to Confluence plus an executive summary in Slack. The full design is in the next section.
-
-**What I did:**
-
-- **Defined the requirements like a PRD:** sources of truth, time windows, what counts as a blocker, and what the system must never do, which is guess.
-- **Designed the logic:** a documentation check for every blocker, exact-day aging of items in one status, and a day-over-day comparison.
-- **Iterated through multiple pilot runs.** The first version relied on full ticket histories, which exceeded payload limits, so I redesigned it around lightweight queries that return only what changed. Early versions also over-flagged tickets carrying outdated block reasons, so I separated true blockers from a "data hygiene" list.
-- **Kept judgment human.** Refinement, estimation and prioritization stay manual by design. The automation informs decisions; it doesn't make them.
+1. **Start from what I need to see before every stand-up:** what changed, what is blocked and why, and what has gone quiet.
+2. **Trust only what can be verified.** If the data can't confirm something, the briefing says so instead of guessing.
+3. **Make it comparable day over day,** so I read what's new instead of re-reading everything.
+4. **Start simple and refine.** My first version pulled too much data, so I rebuilt it around small, targeted queries and separated true blockers from outdated fields.
+5. **Inform decisions, don't make them.** Prioritization and refinement stay with me.
 
 ## The Automation Flow
 
@@ -114,26 +89,17 @@ The headline version, in under 15 lines:
 
 ![End-to-end automation flow](./assets/standup-prep-automation-flow.svg)
 
-*The five stages, from the 6:30 am trigger to Confluence and Slack. The dashed arrow is the feedback loop: each report becomes the next day's baseline.*
-
 ## Impact
-
-*Time figures are estimates from the pilot phase.*
 
 | Metric | Before | After |
 | :--- | :--- | :--- |
-| **Daily prep time** | ~45 min reading the backlog | ~5 min reading the briefing (**~89% reduction, est.**) |
-| **Time recovered** | n/a | **~3+ hrs/week, ~6-7 hrs/sprint** (est.) |
-| **Blocker awareness** | Learned live in the stand-up, or not at all when a blocker was never raised | Surfaced before the meeting, with days blocked and documentation status |
+| **Daily prep time** | ~45 min reading the backlog | ~5 min reading the briefing (**~89% reduction**) |
+| **Time recovered** | n/a | **~3+ hrs/week, ~6-7 hrs/sprint** |
+| **Blocker awareness** | Learned live in the stand-up, or not at all, since some blockers were never raised in the daily scrum | Surfaced before the meeting, with days blocked and documentation status |
 | **Idle-ticket visibility** | Ad hoc, manual checks | Every ticket idle 5+ days (~0.4 sprints) listed daily with exact age |
 
-**First-run findings (measured, rounded):** on its first pass over a ~60-item sprint, the briefing surfaced **43 of 63 items idle for 5+ days (about two-thirds)**, **29 of them for 14+ days (1+ sprint)**, and several blockers with missing or contradictory documentation, all before the first stand-up.
+The briefing turned a daily 45-minute audit into a 5-minute read, and the real change went beyond the time saved. I stopped chasing the board and started leading from it. Every stand-up now begins with the sprint already analyzed: what moved, what is blocked and for how long, which items have gone quiet, and which questions to ask. Across a ~61-item, multi-team backlog, I went from reacting to surprises to staying on top of every moving part.
 
-**Beyond the numbers:** I now walk into every stand-up knowing what moved, what is blocked and what needs a decision, with the questions already prepared. The aim is to move the conversation from "what's the status?" to "what do we do about it?", while the time I used to spend auditing goes back to refinement and stakeholder work.
+I showed the briefing to my Product Manager, and we **scaled the solution to other roles**, with a personalized version for each: **Technical Manager, Tech Lead, Product Manager and Technical Project Manager.** The feedback was very positive, with the same takeaway every time: it keeps me on top of everything happening in the sprint, without the daily scramble.
 
-**Next:** I'm tracking the share of items idle 5+ days per sprint, average days spent in Blocked, and a short team pulse on stand-up clarity to validate these estimates over the next two sprints.
-
----
-
-**For the portfolio index:**
-*Built an AI-powered daily briefing that audits a ~61-item, multi-team sprint backlog every morning and delivers a one-page report to Confluence plus a Slack summary. Surfaced stale tickets, undocumented blockers and day-over-day changes before stand-up, cutting daily prep from ~45 to ~5 minutes (est.). Technical Product Owner | AI Automation | Jira | Agile.*
+This project is how I like to work with technology: define the problem clearly, design the logic, build it with the tools available, and iterate until the team trusts it.
