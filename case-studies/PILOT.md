@@ -4,7 +4,7 @@
 
 I'm the Product Owner of the Platform Experience team, the configuration and management layer of a B2B2C platform. Every other stream (core APIs, client SDKs, hosted solutions, developer documentation) has to pass through our layer to ship, so our backlog isn't a single team's backlog. It holds **multiple epics from different teams**, from customer-facing console features and security capabilities to partner integrations and production support.
 
-Sprints run two weeks, and on average we carry **~61 primary items per sprint** (stories, tasks and bugs, excluding sub-tasks), based on the last five sprints: 55, 67, 61, 58 and 64.
+Sprints run two weeks, and on average we carry **~61 primary items per sprint** (stories, tasks and bugs, excluding sub-tasks).
 
 Work moves through a multi-stage workflow (Submitted, In Progress, Code Review, Ready for QA, In QA Review, Ready for UAT, plus Blocked), and the team runs four stand-ups a week, one of them focused on estimation, plus product backlog refinement. Keeping that board accurate depends on delivery hygiene: timely status updates, blocker follow-up and cross-team dependency tracking.
 
